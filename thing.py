@@ -1,8 +1,13 @@
-from django.contrib import admin
-from django.urls import path
-from search import views
+from django.shortcuts import render
+from .models import SerialNumber
+from .forms import SerialSearchForm
 
-urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('search/', views.search_view, name='search'),
-]
+def search_view(request):
+    form = SerialSearchForm()
+    results = None
+    if request.method == 'GET':
+        form = SerialSearchForm(request.GET)
+        if form.is_valid():
+            serial_number = form.cleaned_data['serial_number']
+            results = SerialNumber.objects.filter(serial_number__icontains=serial_number)
+    return render(request, 'search/search.html', {'form': form, 'results': results})
