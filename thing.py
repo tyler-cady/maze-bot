@@ -1,13 +1,8 @@
-from django.shortcuts import render
-from .models import SerialNumber
-from .forms import SerialSearchForm
+from django.db import models
 
-def search_view(request):
-    form = SerialSearchForm()
-    results = None
-    if request.method == 'GET':
-        form = SerialSearchForm(request.GET)
-        if form.is_valid():
-            serial_number = form.cleaned_data['serial_number']
-            results = SerialNumber.objects.filter(serial_number__icontains=serial_number)
-    return render(request, 'search/search.html', {'form': form, 'results': results})
+class SerialNumber(models.Model):
+    serial_number = models.CharField(max_length=100, unique=True)
+    description = models.TextField()
+
+    def __str__(self):
+        return self.serial_number
