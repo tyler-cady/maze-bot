@@ -1,19 +1,22 @@
-import matplotlib.pyplot as plt
-import matplotlib.cm as cm
-import matplotlib.colors as mcolors
+import random
 
-if self.plot_mode == PlotOption.Spectrogram:
+def generate_number(n):
+    if n <= 0:
+        return ""
 
-    spectr_data, spectr_extent = Processing.calcSpectrogram(packet)
+    # Initialize the result list with the first digit
+    result = [random.choice(['0', '1', '2', '3'])]
+    
+    while len(result) < n:
+        # Generate a random digit different from the last one
+        next_digit = random.choice(['0', '1', '2', '3'])
+        while next_digit == result[-1]:
+            next_digit = random.choice(['0', '1', '2', '3'])
+        result.append(next_digit)
 
-    # Clear the current axes
-    Fig_h.get_axes()[2].cla()
+    return ''.join(result)
 
-    # Plot the spectrogram
-    Fig_h.get_axes()[2].imshow(spectr_data, cmap='magma', origin='lower', aspect='auto', extent=spectr_extent)
-
-    # Normalize the colormap
-    norm = mcolors.Normalize(vmin=spectr_data.min(), vmax=spectr_data.max())
-
-    # Add a colorbar to the spectrogram
-    Fig_h.colorbar(cm.ScalarMappable(norm=norm, cmap='magma'), ax=Fig_h.get_axes()[2])
+# Example usage:
+n = 10
+generated_number = generate_number(n)
+print(f"Generated number of length {n}: {generated_number}")
