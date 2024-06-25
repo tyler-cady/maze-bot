@@ -1,0 +1,9 @@
+<a id="addTravelerLink" href="#">Add Traveler</a>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var currentUrl = window.location.href;
+        var addTravelerUrl = currentUrl + "/add_traveler";
+        document.getElementById("addTravelerLink").setAttribute("href", addTravelerUrl);
+    });
+</script>-
