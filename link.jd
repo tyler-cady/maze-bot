@@ -1,9 +1,20 @@
-<a id="addTravelerLink" href="#">Add Traveler</a>
+// appendLink.js
 
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        var currentUrl = window.location.href;
-        var addTravelerUrl = currentUrl + "/add_traveler";
-        document.getElementById("addTravelerLink").setAttribute("href", addTravelerUrl);
-    });
-</script>-
+// Function to append text to the current URL and update link
+function appendTextToCurrentUrl(text) {
+    var currentUrl = window.location.href;
+    var newUrl = currentUrl + "/" + text;
+    return newUrl;
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+    var linkText = "add_traveler"; // Replace with the text you want to append
+    var linkUrl = appendTextToCurrentUrl(linkText);
+
+    // Update link dynamically
+    var linkElement = document.getElementById("addTravelerLink");
+    if (linkElement) {
+        linkElement.setAttribute("href", linkUrl);
+        linkElement.textContent = "Add " + linkText.replace("_", " "); // Optional: Adjust link text
+    }
+});
