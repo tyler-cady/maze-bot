@@ -1,24 +1,24 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Serial Number Search</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}My Site{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 <body>
-    <h1>Search Serial Numbers</h1>
-    <form method="get" action="{% url 'search' %}">
-        {{ form.as_p }}
-        <button type="submit">Search</button>
-    </form>
-
-    {% if results %}
-        <h2>Results</h2>
-        <ul>
-            {% for result in results %}
-                <li>{{ result.serial_number }}: {{ result.description }}</li>
-            {% endfor %}
-        </ul>
-    {% elif results is not None %}
-        <p>No results found.</p>
-    {% endif %}
+    <header>
+        <div class="header-content">
+            <div class="site-name">
+                My Website
+            </div>
+            <div class="logo">
+                <img src="{% static 'images/logo.png' %}" alt="Logo">
+            </div>
+        </div>
+    </header>
+    {% block content %}
+    {% endblock %}
 </body>
 </html>
