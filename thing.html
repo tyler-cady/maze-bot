@@ -1,24 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}My Site{% endblock %}</title>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-</head>
-<body>
-    <header>
-        <div class="header-content">
-            <div class="site-name">
-                My Website
-            </div>
-            <div class="logo">
-                <img src="{% static 'images/logo.png' %}" alt="Logo">
-            </div>
-        </div>
-    </header>
-    {% block content %}
-    {% endblock %}
-</body>
-</html>
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #f8f9fa;
+    padding: 10px 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.site-name {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.logo img {
+    height: 40px; /* Adjust the height of the logo as needed */
+}
