@@ -6,8 +6,8 @@
 MPU6050 mpu;
 
 // Define encoder connections
-Encoder encoderLeft(2, 3);   // Encoder A and B channels
-Encoder encoderRight(4, 5);  // Encoder A and B channels
+Encoder encoderLeft(2, 3);   //  pin numbers for encoder A and B channels
+Encoder encoderRight(4, 5);  //  pin numbers for encoder A and B channels
 
 // Motor control pins
 const int motorPin1 = 6;  // Motor 1 direction pin
@@ -17,7 +17,7 @@ const int motorPin4 = 9;  // Motor 2 PWM speed control pin
 
 // PID constants (adjust as needed)
 double Kp = 1.0;
-double Ki = 0.01;
+double Ki = 0.0;
 double Kd = 0.0;
 
 // Variables for PID control
@@ -38,7 +38,7 @@ void setup() {
   Wire.begin();
   mpu.initialize();
 
-  // Motor control pins
+  // Initialize motor control pins
   pinMode(motorPin1, OUTPUT);
   pinMode(motorPin2, OUTPUT);
   pinMode(motorPin3, OUTPUT);
@@ -82,9 +82,9 @@ void loop() {
   motorSpeed2 = Kp * error + Ki * integral + Kd * derivative;
 
   // Adjust motor speeds for turning using MPU6050 data
-  // Example: Adjust motor speeds based on turn angle
-  motorSpeed1 += turnAngle * 10;  // Example adjustment factor
-  motorSpeed2 -= turnAngle * 10;  // Example adjustment factor
+  // : Adjust motor speeds based on turn angle
+  motorSpeed1 += turnAngle * 10;  //  adjustment factor
+  motorSpeed2 -= turnAngle * 10;  //  adjustment factor
 
   // Ensure motor speeds are within valid range (-255 to 255)
   motorSpeed1 = constrain(motorSpeed1, -255, 255);
@@ -121,4 +121,42 @@ void loop() {
 
   // Delay to control loop rate (adjust as needed)
   delay(100);
+}
+
+void move(bool pX, bool nX, bool pY, bool nY) {
+  // Adjust motor speeds based on movement flags
+  if (pX) {
+    // Perform a 90-degree right turn
+    motorSpeed1 = 100;  // Adjust speed for right turn
+    motorSpeed2 = -100; // Adjust speed for right turn
+  } else if (nX) {
+    // Perform a 90-degree left turn
+    motorSpeed1 = -100; // Adjust speed for left turn
+    motorSpeed2 = 100;  // Adjust speed for left turn
+  } else if (pY) {
+    // Move forward
+    motorSpeed1 = 100;  // Adjust speed for forward movement
+    motorSpeed2 = 100;  // Adjust speed for forward movement
+  } else if (nY) {
+    // Move backward
+    motorSpeed1 = -100; // Adjust speed for backward movement
+    motorSpeed2 = -100; // Adjust speed for backward movement
+  }
+
+  // Set motor directions based on motor speeds
+  if (motorSpeed1 >= 0) {
+    digitalWrite(motorPin1, HIGH);
+    analogWrite(motorPin2, motorSpeed1);
+  } else {
+    digitalWrite(motorPin1, LOW);
+    analogWrite(motorPin2, -motorSpeed1);
+  }
+
+  if (motorSpeed2 >= 0) {
+    digitalWrite(motorPin3, HIGH);
+    analogWrite(motorPin4, motorSpeed2);
+  } else {
+    digitalWrite(motorPin3, LOW);
+    analogWrite(motorPin4, -motorSpeed2);
+  }
 }
