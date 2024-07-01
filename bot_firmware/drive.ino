@@ -6,8 +6,8 @@
 MPU6050 mpu;
 
 // Define encoder connections
-Encoder encoderLeft(2, 3);   // Example pin numbers for encoder A and B channels
-Encoder encoderRight(4, 5);  // Example pin numbers for encoder A and B channels
+Encoder encoderLeft(2, 3);   // Encoder A and B channels
+Encoder encoderRight(4, 5);  // Encoder A and B channels
 
 // Motor control pins
 const int motorPin1 = 6;  // Motor 1 direction pin
@@ -38,7 +38,7 @@ void setup() {
   Wire.begin();
   mpu.initialize();
 
-  // Initialize motor control pins
+  // Motor control pins
   pinMode(motorPin1, OUTPUT);
   pinMode(motorPin2, OUTPUT);
   pinMode(motorPin3, OUTPUT);
@@ -68,8 +68,8 @@ void loop() {
   long encoderRightValue = encoderRight.read();
 
   // Calculate velocities based on encoder readings
-  double currentVelocityLeft = encoderLeftValue * 0.1;  // Example conversion factor
-  double currentVelocityRight = encoderRightValue * 0.1;  // Example conversion factor
+  double currentVelocityLeft = encoderLeftValue * 0.1;  // Conversion factor
+  double currentVelocityRight = encoderRightValue * 0.1;  // Conversion factor
 
   // Calculate error for PID control
   error = targetVelocity - (currentVelocityLeft + currentVelocityRight) / 2.0;
